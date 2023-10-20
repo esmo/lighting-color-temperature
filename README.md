@@ -48,4 +48,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 - Blender Foundation for the amazing open-source tool.
 
-For any issues, please [create an issue](https://github.com/YourUsername/BlenderLightTemperatureAddon/issues) on GitHub or contact the maintainers.
+For any issues, please [create an issue](https://github.com/esmo/lighting-color-temperature/issues) on GitHub or contact the maintainers.
