@@ -16,9 +16,9 @@ The plugin uses a simplified algorithm to approximate the RGB values for color t
 
 1. **Download the Repository**: Clone this GitHub repository to your local machine or download it as a ZIP file.
 
-    \`\`\`
+    ```
     git clone https://github.com/esmo/lighting-color-temperature.git
-    \`\`\`
+    ```
 
     Or click on `Code` > `Download ZIP`.
 
