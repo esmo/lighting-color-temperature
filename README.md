@@ -24,7 +24,7 @@ The plugin uses a simplified algorithm to approximate the RGB values for color t
 
 2. **Open Blender**: Launch Blender and go to `Edit > Preferences > Add-ons > Install`.
 
-3. **Install Addon**: Navigate to the downloaded folder and select the Python file (`your_addon_name.py`), then click `Install Add-on`.
+3. **Install Addon**: Navigate to the downloaded folder and select the Python file (`lighting-color-temperature.py`), then click `Install Add-on`.
 
 4. **Activate Addon**: In the Add-ons tab, you will see your addon listed. Check the box to activate it.
 
@@ -47,6 +47,5 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 - Blender Foundation for the amazing open-source tool.
-- Everyone who contributes to improving this addon.
 
 For any issues, please [create an issue](https://github.com/YourUsername/BlenderLightTemperatureAddon/issues) on GitHub or contact the maintainers.
