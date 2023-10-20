@@ -4,7 +4,7 @@
 
 The Blender Light Temperature Addon allows you to set the color temperature for light objects directly within Blender's Data Properties panel. Once you specify the temperature, the RGB color of the light object updates automatically.
 
-The plugin uses a simplified algorithm to approximate the RGB values for color temperatures in Kelvin, which was written using ChatGPT 4.0. It is based on the concept of Planckian locus and is inspired by Tanner Helland's method.
+The plugin uses a simplified algorithm to approximate the RGB values for color temperatures in Kelvin, which was written using ChatGPT 4.0. According to ChatGPT, it is based on the concept of Planckian locus and is inspired by Tanner Helland's method. I actually don't have a clue about any of this, but it looks good.
 
 ## Features
 
