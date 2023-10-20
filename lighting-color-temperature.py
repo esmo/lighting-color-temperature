@@ -12,11 +12,42 @@ from bpy.types import Panel
 from bpy.props import FloatProperty
 import math
 
+# Define preset values
+def temperature_presets_callback(scene, context):
+     return [('1000', 'Candlelight', '1000K'),
+            ('2000', 'Antique Filament Bulbs', '2000K'),
+            ('2700', 'Incandescent Bulbs', '2700K'),
+            ('3000', 'Warm White LED', '3000K'),
+            ('3500', 'Halogen Lamp', '3500K'),
+            ('4000', 'Cool White Fluorescent', '4000K'),
+            ('4100', 'Moonlight', '4100K'),
+            ('4500', 'Overcast Sky', '4500K'),
+            ('5000', 'Daylight', '5000K'),
+            ('5500', 'Noon Sunlight', '5500K'),
+            ('6000', 'Bright Midday Sun', '6000K'),
+            ('6500', 'Lightly Overcast Sky', '6500K'),
+            ('7000', 'Shade', '7000K'),
+            ('8000', 'Blue Sky', '8000K'),
+            ('9000', 'Open Shade on Clear Day', '9000K'),
+            ('10000', 'Heavy Overcast Sky or Sunset', '10000K'),
+            ('11000', 'Deep Blue Sky', '11000K'),
+            ('12000', 'Arctic Light', '12000K')]
+
+
 # Function to update RGB values based on color temperature
-def update_color_temperature(self, context):
+def update_color_temperature_from_slider(self, context):
     light = context.light
     temp = light.color_temperature
+    set_color_temperature(light, temp)
 
+# Function to update RGB values based on color temperature
+def update_color_temperature_from_preset(self, context):
+    light = context.light
+    temp = int(self.temperature_presets)
+    light.color_temperature = temp
+    set_color_temperature(light, temp)
+
+def set_color_temperature(light, temp):
     temp = temp / 100
     if temp <= 66:
         red = 255
@@ -42,14 +73,23 @@ def update_color_temperature(self, context):
 
     light.color = (red, green, blue)
 
+# Create EnumProperty
+bpy.types.Light.temperature_presets = bpy.props.EnumProperty(
+    items=temperature_presets_callback,
+    name="Temperature Presets",
+    description="Select a color temperature preset",
+    update=update_color_temperature_from_preset
+    )
+
+
 # Adding custom property for color temperature
 bpy.types.Light.color_temperature = FloatProperty(
     name="Color Temperature",
     description="Set the color temperature of the light",
     default=6500.0,
     min=1000.0,
-    max=10000.0,
-    update=update_color_temperature
+    max=12000.0,
+    update=update_color_temperature_from_slider
 )
 
 # Creating custom panel
@@ -68,12 +108,19 @@ class LIGHT_PT_color_temperature(Panel):
     def draw(self, context):
         layout = self.layout
         light = context.light
+        # Add preset dropdown
+        layout.prop(light, 'temperature_presets', text="Presets")
+        # Add manual color temperature slider
         layout.prop(light, "color_temperature")
+
 def register():
     bpy.utils.register_class(LIGHT_PT_color_temperature)
+    bpy.types.Light.color_temperature = FloatProperty(name="Color Temperature", default=5500, update=update_color_temperature_from_slider)
 
 def unregister():
     bpy.utils.unregister_class(LIGHT_PT_color_temperature)
+    del bpy.types.Light.color_temperature
+    del bpy.types.Light.temperature_presets
 
 if __name__ == "__main__":
     register()

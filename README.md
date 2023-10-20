@@ -9,8 +9,8 @@ The plugin uses a simplified algorithm to approximate the RGB values for color t
 ## Features
 
 - Adds a "Color Temperature" field in the Data Properties panel for light objects.
+- Adds a bunch of Presets that cover light sources in the range from 1000K to 12000K.
 - Automatic update of the light's RGB color based on the chosen color temperature.
-- Simplified and intuitive user interface for lighting setup.
 
 ## Installation
 
