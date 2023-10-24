@@ -99,7 +99,17 @@ class LIGHT_PT_color_temperature(Panel):
     bl_space_type = 'PROPERTIES'
     bl_region_type = 'WINDOW'
     bl_context = "data"
-    bl_parent_id = "DATA_PT_context_light"
+    bl_options = {'DEFAULT_CLOSED'}
+    bl_category = "Light"
+
+
+    # bl_label = "Color Temperature"
+    # bl_idname = "LIGHT_PT_color_temperature"
+    # bl_space_type = 'PROPERTIES'
+    # bl_region_type = 'WINDOW'
+    # bl_context = "data"
+    # bl_category = "Light"
+    # bl_parent_id = "DATA_PT_context_light"
 
     @classmethod
     def poll(cls, context):
