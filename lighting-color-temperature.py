@@ -1,9 +1,9 @@
 bl_info = {
-    "name": "Color Temperature Add-on",
+    "name": "Color Temperature",
     "blender": (2, 80, 0),
     "category": "Lighting",
     "description": "Allows you to set color temperature for lights",
-    "author": "Your Name",
+    "author": "Edouard J. Simon",
     "version": (1, 0)
 }
 
@@ -15,23 +15,23 @@ import math
 # Define preset values
 def temperature_presets_callback(scene, context):
      return [('1000', 'Candlelight', '1000K'),
-            ('2000', 'Antique Filament Bulbs', '2000K'),
-            ('2700', 'Incandescent Bulbs', '2700K'),
-            ('3000', 'Warm White LED', '3000K'),
-            ('3500', 'Halogen Lamp', '3500K'),
-            ('4000', 'Cool White Fluorescent', '4000K'),
-            ('4100', 'Moonlight', '4100K'),
-            ('4500', 'Overcast Sky', '4500K'),
-            ('5000', 'Daylight', '5000K'),
-            ('5500', 'Noon Sunlight', '5500K'),
-            ('6000', 'Bright Midday Sun', '6000K'),
-            ('6500', 'Lightly Overcast Sky', '6500K'),
-            ('7000', 'Shade', '7000K'),
-            ('8000', 'Blue Sky', '8000K'),
-            ('9000', 'Open Shade on Clear Day', '9000K'),
-            ('10000', 'Heavy Overcast Sky or Sunset', '10000K'),
-            ('11000', 'Deep Blue Sky', '11000K'),
-            ('12000', 'Arctic Light', '12000K')]
+             ('2000', 'Antique Filament Bulbs', '2000K'),
+             ('2700', 'Soft White Incandescent Bulbs', '2700K'),
+             ('3000', 'Evening Sunlight', '3000K'),
+             ('3500', 'Neutral White LED', '3500K'),
+             ('4000', 'Cool White Fluorescent', '4000K'),
+             ('4100', 'Moonlight', '4100K'),
+             ('4500', 'Overcast Morning/Evening', '4500K'),
+             ('5000', 'Morning Sunlight', '5000K'),
+             ('5500', 'Midday Sunlight', '5500K'),
+             ('6000', 'Direct Midday Sunlight', '6000K'),
+             ('6500', 'Standard Daylight', '6500K'),
+             ('7000', 'Cloudy Sky', '7000K'),
+             ('8000', 'Partly Cloudy Sky', '8000K'),
+             ('9000', 'Shade in Clear Sky', '9000K'),
+             ('10000', 'Overcast Sky', '10000K'),
+             ('11000', 'Deep Blue Sky', '11000K'),
+             ('12000', 'Arctic Sky', '12000K')]
 
 
 # Function to update RGB values based on color temperature
@@ -47,39 +47,61 @@ def update_color_temperature_from_preset(self, context):
     light.color_temperature = temp
     set_color_temperature(light, temp)
 
-def set_color_temperature(light, temp):
-    temp = temp / 100
-    if temp <= 66:
+def set_color_temperature(light, kelvin):
+    kelvin = kelvin / 100.0
+    red, green, blue = 0.0, 0.0, 0.0
+
+    if kelvin <= 66:
         red = 255
-        green = temp
+        green = kelvin
         green = 99.4708025861 * math.log(green) - 161.1195681661
+        if kelvin <= 19:
+            blue = 0
+        else:
+            blue = kelvin - 10
+            blue = 138.5177312231 * math.log(blue) - 305.0447927307
     else:
-        red = temp - 60
+        red = kelvin - 60
         red = 329.698727446 * (red ** -0.1332047592)
-        green = temp - 60
-        green = 288.1221695283 * (green ** -0.0755148492)
-
-    if temp >= 66:
+        green = kelvin - 60
+        green = 288.1221695283 * (green ** -0.0755148492 )
         blue = 255
-    elif temp <= 19:
-        blue = 0
-    else:
-        blue = temp - 10
-        blue = 138.5177312231 * math.log(blue) - 305.0447927307
 
-    red = min(max(red, 0), 255)/255
-    green = min(max(green, 0), 255)/255
-    blue = min(max(blue, 0), 255)/255
+    red = max(0, min(255, red)) / 255.0
+    green = max(0, min(255, green)) / 255.0
+    blue = max(0, min(255, blue)) / 255.0
+
+    #print("RGB for {}K: {}".format(kelvin, (red, green, blue)))
 
     light.color = (red, green, blue)
 
+preset_items = [('1000', 'Candlelight', '1000K'),
+        ('2000', 'Antique Filament Bulbs', '2000K'),
+        ('2700', 'Soft White Incandescent Bulbs', '2700K'),
+        ('3000', 'Evening Sunlight', '3000K'),
+        ('3500', 'Neutral White LED', '3500K'),
+        ('4000', 'Cool White Fluorescent', '4000K'),
+        ('4100', 'Moonlight', '4100K'),
+        ('4500', 'Overcast Morning/Evening', '4500K'),
+        ('5000', 'Morning Sunlight', '5000K'),
+        ('5500', 'Midday Sunlight', '5500K'),
+        ('6000', 'Direct Midday Sunlight', '6000K'),
+        ('6500', 'Standard Daylight', '6500K'),
+        ('7000', 'Cloudy Sky', '7000K'),
+        ('8000', 'Partly Cloudy Sky', '8000K'),
+        ('9000', 'Shade in Clear Sky', '9000K'),
+        ('10000', 'Overcast Sky', '10000K'),
+        ('11000', 'Deep Blue Sky', '11000K'),
+        ('12000', 'Arctic Sky', '12000K')]
+
 # Create EnumProperty
 bpy.types.Light.temperature_presets = bpy.props.EnumProperty(
-    items=temperature_presets_callback,
+    items=preset_items,
     name="Temperature Presets",
-    description="Select a color temperature preset",
+    description="Color temperature preset",
+    default="6500",
     update=update_color_temperature_from_preset
-    )
+)
 
 
 # Adding custom property for color temperature
@@ -102,15 +124,6 @@ class LIGHT_PT_color_temperature(Panel):
     bl_options = {'DEFAULT_CLOSED'}
     bl_category = "Light"
 
-
-    # bl_label = "Color Temperature"
-    # bl_idname = "LIGHT_PT_color_temperature"
-    # bl_space_type = 'PROPERTIES'
-    # bl_region_type = 'WINDOW'
-    # bl_context = "data"
-    # bl_category = "Light"
-    # bl_parent_id = "DATA_PT_context_light"
-
     @classmethod
     def poll(cls, context):
         return context.light is not None
@@ -125,7 +138,7 @@ class LIGHT_PT_color_temperature(Panel):
 
 def register():
     bpy.utils.register_class(LIGHT_PT_color_temperature)
-    bpy.types.Light.color_temperature = FloatProperty(name="Color Temperature", default=5500, update=update_color_temperature_from_slider)
+    bpy.types.Light.color_temperature = FloatProperty(name="Color Temperature", default=6500, update=update_color_temperature_from_slider)
 
 def unregister():
     bpy.utils.unregister_class(LIGHT_PT_color_temperature)
