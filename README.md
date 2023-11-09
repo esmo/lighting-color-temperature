@@ -4,12 +4,19 @@
 
 The Blender Light Temperature Addon allows you to set the color temperature for light objects directly within Blender's Data Properties panel. Once you specify the temperature, the RGB color of the light object updates automatically.
 
-The plugin uses a simplified algorithm to approximate the RGB values for color temperatures in Kelvin, which was written using ChatGPT 4.0. According to ChatGPT, it is based on the concept of Planckian locus and is inspired by Tanner Helland's method. I actually don't have a clue about any of this, but it looks good.
+The plugin uses offers 2 ways of calculating the RGB color values from color temperature values:
+
+- using an algorithm based on the work of Tanner Helland that approximates the RGB values for color temperatures in Kelvin. You can find it here: https://tannerhelland.com/2012/09/18/convert-temperature-rgb-algorithm-code.html
+- using a table that was computed by Mitchell Charity, which shows the RGB color values for different color temperatures in the CIE 1931 and CIE 1964 color space respectively. The values between the ones in the table are approximated with linear interpolation.
+See here for more info: http://www.vendian.org/mncharity/dir3/blackbody/
+
+Drop me a note if you know about a better way.
 
 ## Features
 
 - Adds a "Color Temperature" field in the Data Properties panel for light objects.
-- Adds a bunch of Presets that cover light sources in the range from 1000K to 12000K.
+- Adds a bunch of Presets that cover light sources in the range from 1000K to 20000K.
+- Has the option to switch between Tanner Hellands algorithm or the CIE 1931 / 1964 color space tables.
 - Automatic update of the light's RGB color based on the chosen color temperature.
 
 ## Installation
@@ -34,7 +41,7 @@ The plugin uses a simplified algorithm to approximate the RGB values for color t
 
 2. **Navigate to Data Properties**: Go to the `Data Properties` panel.
 
-3. **Set Temperature**: You will see a "Color Temperature" field. Enter the desired temperature value (in Kelvins) and the RGB color of the light will automatically update.
+3. **Set Temperature**: You will see a "Color Temperature" field. Enter the desired temperature value (in Kelvins) or choose a preset from the dropdown, and the RGB color of the light will automatically update.
 
 ## Contributing
 
