@@ -21,17 +21,11 @@ Drop me a note if you know about a better way.
 
 ## Installation
 
-1. **Download the Repository**: Clone this GitHub repository to your local machine or download it as a ZIP file.
-
-    ```
-    git clone https://github.com/esmo/lighting-color-temperature.git
-    ```
-
-    Or click on `Code` > `Download ZIP`.
+1. **Download the Repository**: Click on `Code` > `Download ZIP`.
 
 2. **Open Blender**: Launch Blender and go to `Edit > Preferences > Add-ons > Install`.
 
-3. **Install Addon**: Navigate to the downloaded folder and select the Python file (`lighting-color-temperature.py`), then click `Install Add-on`.
+3. **Install Addon**: Navigate to the downloaded folder and select the ZIP file (should read `lighting-color-temperature-main.zip`), then click `Install Add-on`.
 
 4. **Activate Addon**: In the Add-ons tab, you will see your addon listed. Check the box to activate it.
 
