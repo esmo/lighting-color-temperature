@@ -47,6 +47,6 @@ This project is licensed under the MIT License.
 
 ## Acknowledgments
 
-- Blender Foundation for the amazing open-source tool.
+- Blender Foundation for the amazing piece of free software.
 
 For any issues, please [create an issue](https://github.com/esmo/lighting-color-temperature/issues) on GitHub or contact the maintainers.
